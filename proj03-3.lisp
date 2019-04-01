@@ -1,5 +1,40 @@
 (setq ext:*warn-on-redefinition* nil)
 
+(format t "~%")
+(format t "** CSC 173~%")
+(format t "** PROJECT 3: FUNCTIONAL PROGRAMMING IN LISP~%")
+(format t "** NICHOLAS SALEM~%")
+(format t "** THABANI DUBE~%")
+(format t "** KASIM SUDAIS~%~%")
+(format t "** list functions~%~%")
+
+(defun loop2inps (f1 name)
+    (format t "enter a list of arguments for ~a. enter nil to stop~%" name)
+
+    (setq p1 (read)) 
+    (if (equal p1 nil)
+        (progn)
+        (progn
+            (setq p2 (read))
+            (format t "(~a ~a ~a => ~a)~%" name p1 p2 (funcall f1 p1 p2))
+            (loop2inps f1 name)
+        )
+    )
+)
+
+(defun loop1inp (f1 name)
+    (format t "enter a list of arguments for ~a. enter nil to stop~%" name)
+
+    (setq p1 (read)) 
+    (if (equal p1 nil)
+        (progn)
+        (progn
+            (format t "(~a ~a => ~a)~%" name p1 (funcall f1 p1))
+            (loop2inps f1 name)
+        )
+    )
+)
+
 ;;list 1 append
 
 (defun MyAppend (l1a l1b)
@@ -24,8 +59,10 @@
     (inner1 l1a l1b)
     (return-from MyAppend (reverse list1r))
 )
-
-(format t "~a~%" (MyAppend '(0 1 2) '(3 4 5)))
+(setq input1 '(0 1 2))
+(setq input2 '(3 4 5))
+(format t "(append ~a ~a) => ~a~%" input1 input2 (MyAppend input1 input2))
+;;(loop2inps #'append "append")
 
 
 ;; list 2 reverse
@@ -43,8 +80,9 @@
     (inner2 input)
     (return-from reverse l2)  
 )
-(format t "~a~%" (reverse '(0 1 2 3 4 5 )))
-
+(setq input1 '(0 1 2))
+(format t "(reverse ~a) => ~a~%" input1 (reverse input1))
+;;(loop1inp #'reverse "reverse")
 
 ;; list 3 map function
 (defun add3(x)
@@ -67,7 +105,10 @@
     (inner3 func list)
     (return-from map (reverse l3))
 )
-(format t "~a~%" (map #'add3 '(0 1 2 3 4 5)))
+;;(format t "~a~%" (map #'add3 '(0 1 2 3 4 5)))
+(setq input1 '(0 1 2))
+(format t "(MAP ADD3 ~a) => ~a~%" input1 (map #'add3 input1))
+;;(loop2inpS #'map "MAP ADD3")
 
 
 ;; list 4 remove duplicates
@@ -97,7 +138,10 @@
     (inner4 list)
     (return-from removeDuplicates (reverse l4))
 )
-(format t "~A~%" (removeDuplicates '(0 0 1 0 2 3 4 2 5)))
+;;(format t "~A~%" (removeDuplicates '(0 0 1 0 2 3 4 2 5)))
+(setq input1 '(0 0 1 0 2 3 4 2 5))
+(format t "(remove duplicates ~a) => ~a~%" input1 (removeDuplicates input1))
+;;(loop1inp #'removeDuplicates "remove Dupliactes")
 
 ;;list q 5
 (defun fold (v0 func list)
@@ -114,7 +158,7 @@
     (inner5 func list)
     (return-from fold value)
 )
-(format t "~a~%" (fold 10 #'- '(5 6)))
+(format t "(fold 10 - '(1 2 3) => ~a)~%" (fold 10 #'- '(1 2 3)))
 
 ;;list q 6 
 (defun lessthan3 (x)
@@ -139,7 +183,8 @@
     (inner6 func list)
     (return-from filter (reverse l6))
 )
-(format t "~a~%" (filter #'lessthan3 '(0 1 2 3 5)))
+(setq input1 '(0 1 2 3 5))
+(format t "(filter lessThan3 ~a => ~a)~%" input1 (filter #'lessthan3 input1))
 
 ;;list q 7 got the insertion sort from https://gist.github.com/zard1989/999290
 (defun insert (item lst &optional (key #'<))
@@ -158,7 +203,9 @@
     (setq result7 (MyAppend list7a list7b))
     (return-from addSorted (insertion-sort result7))
 )
-(format t "q7) ~a~%" (addSorted '(0 999 4 6 8) '(1 3 5 7 9)))
+(setq input1 '(0 999 4 6 8))
+(setq input2 '(1 3 5 7 9))
+(format t "(merge ~a ~a => ~a)~%" input1 input2 (addSorted input1 input2))
 
 ;;list q 8
 (defun add_to_end (numb list)
@@ -177,7 +224,9 @@
     (innr8 numb i)
     (return-from add_to_end l8)
 )
-(format t "~a~%" (add_to_end 6 '(0 1 2 3 5)))
+(setq input1 '(999))
+(setq input2 '(1 3 5 7 9))
+(format t "(add to end ~a ~a => ~a)~%" input1 input2 (add_to_end input1 input2))
 
 ;;list q9
 
@@ -199,7 +248,9 @@
     (setq i (inner9 element list))
     (return-from indexOf i)
 )
-(format t "~a~%" (indexOf 3 '(0 1 2 3 5)))
+(setq input1 3)
+(setq input2 '(1 3 5 7 9))
+(format t "(index of ~a ~a => ~a)~%" input1 input2 (indexOf input1 input2))
 
 ;; list q10
 
@@ -220,7 +271,10 @@
     (inner10 element list)
     (return-from removeAll (reverse l10))
 )
-(format t "~a~%" (removeAll 0 '(0 1 2 0 3 4 5)))
+;;(format t "~a~%" (removeAll 0 '(0 1 2 0 3 4 5)))
+(setq input1 0)
+(setq input2 '(0 1 2 0 3 4 5))
+(format t "(remove all ~a ~a => ~a)~%" input1 input2 (removeAll input1 input2))
 
 ;; ------------------ SET METHODS ----------------------------------------------
 
@@ -237,6 +291,8 @@
 ;;     ) 
 ;;     (innerst element set)
 ;; )
+
+(format t "~%**SET QUESTIONS~%~%")
 
 (defun isMember (element set)
     (setq count 0)
@@ -258,7 +314,9 @@
         (return-from isMember T)
     )
 )
-(format t "set Q1: ~A~%" (isMember 1 '(1 2 3)))
+(setq input1 0)
+(setq input2 '(0 1 2 0 3 4 5))
+(format t "(isMemebr ~a ~a => ~a)~%" input1 input2 (isMember input1 input2))
 
 ;; set q2
 
@@ -275,7 +333,10 @@
         )
     )
 )
-(format t "~A~%" (insert "a" '("a" "b" "c")))
+
+(setq input1 "a")
+(setq input2 '("b" "c" "d"))
+(format t "(insert ~a ~a => ~a)~%" input1 input2 (insert input1 input2))
 
 ;; set q3 
 
@@ -298,7 +359,11 @@
     (innerI set3b set3a)
     (return-from intersection (reverse i3))
 )
-(format t "~A~%" (intersection '(1 4) '(1 2 3 4)))
+
+(setq input1 '(1 4))
+(setq input2 '(1 2 3 4))
+(format t "(intersection ~a ~a => ~a)~%" input1 input2 (intersection input1 input2))
+
 
 ;; set q4
 (defun union (set3a set3b)
@@ -318,7 +383,10 @@
     (innerU set3b set3a)
     (return-from union u4)
 )
-(format t "~A~%" (union '(4 99) '(1 2 3 4)))
+
+(setq input1 '(4 99))
+(setq input2 '(1 2 3 4))
+(format t "(union ~a ~a => ~a)~%" input1 input2 (union input1 input2))
 
 ;; ;;set q5
 
@@ -339,7 +407,10 @@
     (innerD set5a set5b)
     (return-from difference d5)
 )
-(format t "~A~%" (difference '("a" "b" "c") '("a" "c" "d")))
+
+(setq input1 '("a" "b" "c"))
+(setq input2 '("a" "b" "d"))
+(format t "(diference ~a ~a => ~a)~%" input1 input2 (difference input1 input2))
 
 ;;set q6
 
@@ -361,7 +432,10 @@
     (innerD set5a set5b)
     (return-from Sdifference d5)
 )
-(format t "~A~%" (Sdifference '("a" "b" "c") '("a" "c" "d")))
+
+(setq input1 '("a" "b" "c"))
+(setq input2 '("a" "c" "d"))
+(format t "(simetric diference ~a ~a => ~a)~%" input1 input2 (Sdifference input1 input2))
 
 ;;set q7
 
@@ -381,7 +455,10 @@
     (setq bool (innerD set5a set5b))
     (return-from sub bool)
 )
-(format t "~A~%" (sub '("a" "c") '("a" "c" "d")))
+
+(setq input1 '("a" "c"))
+(setq input2 '("a" "b" "d"))
+(format t "(sub ~a ~a => ~a)~%" input1 input2 (sub input1 input2))
 
 ;;set q8
 
@@ -401,7 +478,9 @@
     (setq bool (innerD set5b set5a))
     (return-from sup bool)
 )
-(format t "~A~%" (sup '("a" "c" "d" "e") '("a" "c" "j")))
+(setq input1 '("a" "c" "d" "e"))
+(setq input2 '("a" "c" "j"))
+(format t "(super ~a ~a => ~a)~%" input1 input2 (sup input1 input2))
 
 ;; set q 9
 
@@ -419,12 +498,14 @@
     (inners9 set)
     (return-from sq9 count)
 )
-(format t "~A~%" (sq9 '("a" "b" "c" "d")))
+(setq input1 '("a" "b" "c" "d"))
+(format t "(cardinality ~a => ~a)~%" input1 (sq9 input1))
 
 ;; set q 10
 
 ;;----------------------------------------MATH FUNCTIONS--------------------------------------------
 
+(format t "~%**MATH QUESTION~%~%")
 ;; math q 1
 
 (defun absoluteValue (numb)
@@ -433,7 +514,8 @@
         (return-from absoluteValue numb)
     )
 )
-(format t "~a~%" (absoluteValue -7))
+(setq input1 -7)
+(format t "(absolute value ~a => ~a)~%" input1 (absoluteValue input1))
 
 ;;math q 2
 
@@ -443,8 +525,8 @@
     (return-from factorial (* n (factorial (- n 1))))
   )
 ) 
-
-(format t "~A~%" (factorial 5))
+(setq input1 5)
+(format t "(factorial ~a => ~a)~%" input1 (factorial input1))
 
 ;; math q3
 
@@ -454,7 +536,11 @@
         (return-from rightTri nil)
     )
 )
-(format t "~A~%" (rightTri 5 12 13))
+
+(setq input1 5)
+(setq input2 12)
+(setq input3 13)
+(format t "(right-tri ~a ~a ~a => ~a)~%" input1 input2 input3 (rightTri input1 input2 input3))
 
 ;; math q4
 
@@ -477,14 +563,18 @@
 
     (return-from gcd (gcd(n1 n2-n1))) 
 )
-(format t "gcd 8 12 ~A~%" (gcd 8 12))
+(setq input1 8)
+(setq input2 12)
+(format t "(gcd ~A ~A => ~A)~%" input1 input2 (gcd input1 input2))
 
 ;; math q 5
 
 (defun lcd (n1 n2)
     (return-from lcd (/ (* n1 n2) (gcd n1 n2)))
 )
-(format t "lcm 4 and 6 => ~A~%" (lcd 4 6))
+(setq input1 4)
+(setq input2 6)
+(format t "(lcm ~A ~A => ~A)~%" input1 input2 (lcm input1 input2))
 
 ;; math 6
 
@@ -494,9 +584,10 @@
     )
     (return-from fibonacci (+ (fibonacci (- numb 1)) (fibonacci (- numb 2))))
 )
-(format t "fibonacci => ~A~%" (fibonacci 4))
+(setq input1 4)
+(format t "(fibonacci ~a => ~A~%" input1 (fibonacci input1))
 
-;; math 7 note: do it without modulo operator
+;; math 7 
 
 (defun isDivisible (nmerator divisor)
 )
@@ -518,7 +609,8 @@
     (setq answ (innerP number devisor))
     (return-from isPrime answ)
 )
-(format t "is prime? ~A~%" (isPrime 5))
+(setq input1 5)
+(format t "(is prime? ~A => ~A)~%" input1 (isPrime input1))
 
 ;; math q8
 
@@ -550,6 +642,7 @@
 
 ;; ;; -----------------------------------REQUIRED FUNCTIONS----------------------------------------------------------
 
+(format t "~%REQUIRED FUNCTIONS~%~%")
 ;; required 1
 
 (defun isperfect (number)
@@ -577,7 +670,8 @@
         (return-from isperfect nil)
     )
 )
-(format t "is perfect? ~A~% " (isperfect 5))
+(setq input1 5)
+(format t "is perfect? ~a => ~A~% " input1 (isperfect input1))
 
 ;; required q 2
 
@@ -606,7 +700,8 @@
         (return-from isAbundant nil)
     )
 )
-(format t "is abundant? ~A~% " (isAbundant 12))
+(setq input1 5)
+(format t "is abundant? ~a => ~A~% " input1 (isAbundant input1))
 
 ;; required 3
 
@@ -635,4 +730,5 @@
         (return-from isDeficient nil)
     )
 )
-(format t "is deficient? ~A~% " (isDeficient 5))
+(setq input1 5)
+(format t "is deficient? ~a => ~A~% " input1 (isDeficient input1))
